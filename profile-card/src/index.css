@@ -46,7 +46,7 @@ h1 {
 
 .skill {
   padding: 2px 12px;
-  border-radius: 5px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   gap: 8px;

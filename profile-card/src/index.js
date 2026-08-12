@@ -8,17 +8,49 @@ function App() {
       <Avatar />
       <div className="data">
         <Intro />
-        {/* Should contain one Skill component
-        for each web dev skill that you have,
-        customized with props */}
         <SkillList />
       </div>
     </div>
   );
 }
+function Avatar() {
+  return <img className="avatar" src="demo.avif" alt="profile" />;
+}
+function Intro() {
+  return (
+    <div>
+      <h1>Mahendra Purohit</h1>
+      <p>
+        Full-stack web developer and teacher at Udemy. When not coding or
+        preparing a course, I like to play board games, to cook (and eat), or to
+        just enjoy the Portuguese sun at the beach.
+      </p>
+    </div>
+  );
+}
+function SkillList() {
+  return (
+    <div className="skill-list">
+      {/* here Skill is the child component */}
+      <Skill language="React" emoji="💪" color="red" />
+      <Skill language="Php" emoji="💪" color="orange" />
+      <Skill language="Git & gitHub" emoji="💪" color="green" />
+      <Skill language="Javascript" emoji="💪" color="yellow" />
+      <Skill language="Node.js" emoji="👶" color="pink" />
+    </div>
+  );
+}
+function Skill(props) {
+  return (
+    <div className="skill" style={{ backgroundColor: props.color }}>
+      <span>{props.language}</span>
+      <span>{props.emoji}</span>
+    </div>
+  );
+}
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <>
     <App />
-  </React.StrictMode>,
+  </>,
 );
