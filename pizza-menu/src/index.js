@@ -67,40 +67,50 @@ function Header() {
 function Menu() {
   return (
     /* here Menu component is the parent element and Pizza component      */
+
     <main className="menu">
       <h2>Pizza items</h2>
-      <Pizza
-        name="Pizza Spinaci"
-        ingredients="Tomato, mozarella, spinach, and ricotta cheese"
-        photoName="pizzas/spinaci.jpg"
-        price={12}
-      />
+      <ul className="pizzas">
+        <Pizza
+          name="Pizza Spinaci"
+          ingredients="Tomato, mozarella, spinach, and ricotta cheese"
+          photoName="pizzas/spinaci.jpg"
+          price={12}
+        />
 
-      <Pizza
-        name="Pizza Margherita"
-        ingredients="Tomato and mozarella"
-        photoName="pizzas/margherita.jpg"
-        price={10}
-      />
-      <Pizza
-        name="Pizza Salamino"
-        ingredients="Tomato, mozarella, and pepperoni"
-        photoName="pizzas/salamino.jpg"
-        price={15}
-      />
+        <Pizza
+          name="Pizza Margherita"
+          ingredients="Tomato and mozarella"
+          photoName="pizzas/margherita.jpg"
+          price={10}
+        />
+        <Pizza
+          name="Pizza Salamino"
+          ingredients="Tomato, mozarella, and pepperoni"
+          photoName="pizzas/salamino.jpg"
+          price={15}
+        />
+        <Pizza
+          name="Pizza Prosciutto"
+          ingredients="Tomato, mozarella, ham, aragula, and burrata cheese"
+          photoName="pizzas/prosciutto.jpg"
+          price={18}
+        />
+      </ul>
     </main>
   );
 }
 function Pizza(props) {
+  //console.log(props);
   return (
-    <div className="pizza">
+    <li className="pizza">
       <img src={props.photoName} alt={props.name} />
       <div>
         <h3>{props.name}</h3>
         <p>{props.ingredients}</p>
         <span>{props.price}</span>
       </div>
-    </div>
+    </li>
   );
 }
 function Footer() {
@@ -121,7 +131,7 @@ function Footer() {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <>
     <App />
-  </React.StrictMode>,
+  </>,
 );
