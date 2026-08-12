@@ -31,7 +31,6 @@ function Intro() {
 function SkillList() {
   return (
     <div className="skill-list">
-      {/* here Skill is the child component */}
       <Skill language="React" emoji="💪" color="red" />
       <Skill language="Php" emoji="💪" color="orange" />
       <Skill language="Git & gitHub" emoji="💪" color="green" />
