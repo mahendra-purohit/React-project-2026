@@ -129,7 +129,7 @@ const pizzaData = [
 //   );
 // }
 
-// //////////////Render all list items using map method///////////////////
+// //////////////Render all pizza items using map method///////////////////
 function App() {
   return (
     <div className="container">
@@ -153,6 +153,10 @@ function Menu() {
 
     <main className="menu">
       <h2>Our Menu</h2>
+      <p>
+        Authentic Italian cusine.6 creative dishes to choose from.All from our
+        stone oven.
+      </p>
 
       <ul className="pizzas">
         {pizzaData.map((pizza) => (
@@ -162,16 +166,19 @@ function Menu() {
           //   price={pizza.price}
           //   ingredients={pizza.ingredients}
           // />
+
+          ////second way
           <Pizza pizzaObj={pizza} />
         ))}
       </ul>
     </main>
   );
 }
-function Pizza(props) {
-  //if (props.pizzaObj.soldOut) return null;
+function Pizza({ pizzaObj }) {
+  //props destructuring
+
   return (
-    <li className="pizza">
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
       {/* first way <img src={props.photoName} alt={props.name} />
       <div>
         <h3>{props.name}</h3>
@@ -179,34 +186,47 @@ function Pizza(props) {
         <span>{props.price}</span>
       </div> */}
 
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
       </div>
     </li>
   );
 }
 function Footer() {
   const hour = new Date().getHours();
-  const openHour = 14;
+  console.log(hour);
+  const openHour = 11;
   const closeHour = 22;
   const IsOpen = hour >= openHour && hour <= closeHour;
 
   return (
     <footer className="footer">
+      {/* always use ternary operator instead if/else   */}
       {IsOpen ? (
-        <div className="order">
-          <p>we are Open Now you can book order</p>
-          <button className="btn">Order Now</button>
-        </div>
+        <Order closehours={closeHour} openhours={openHour} />
       ) : (
         <div className="order">
           <p>we are closed now</p>
         </div>
       )}
     </footer>
+  );
+}
+
+function Order({ closehours, openhours }) {
+  //{ closehours, openhours } this is called props destructuring
+  return (
+    <div className="order">
+      <p>
+        We are open from {openhours}:00 to {closehours}:00 You can book order
+        now
+      </p>
+      <button className="btn">Order Now</button>
+    </div>
   );
 }
 
