@@ -12,7 +12,8 @@ export default function App() {
     if (step > 1) setstep(step - 1);
   }
   function handleNext() {
-    if (step < 3) setstep(step + 1);
+    if (step < 3) setstep((s) => s + 1); //update the state based on current state(best way)
+    //if (step < 3) setstep(step + 1);
   }
   return (
     <>
