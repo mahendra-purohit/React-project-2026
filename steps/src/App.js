@@ -9,7 +9,7 @@ export default function App() {
   const [step, setstep] = useState(1);
   const [isOpen, setisOpen] = useState(true);
   function handlePrevious() {
-    if (step > 1) setstep(step - 1);
+    if (step > 1) setstep((s) => s - 1);
   }
   function handleNext() {
     if (step < 3) setstep((s) => s + 1); //update the state based on current state(best way)
