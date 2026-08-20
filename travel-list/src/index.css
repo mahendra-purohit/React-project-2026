@@ -101,7 +101,7 @@ input {
   gap: 1.2rem;
   justify-content: center;
   align-content: start;
-  height: auto;
+  height: 250px;
 }
 
 .list li {
