@@ -77,3 +77,121 @@ function Output({ bill, tip }) {
 function Reset({ onReset }) {
   return <button onClick={onReset}>Reset</button>;
 }
+
+///////////////////calculate student marks//////////////////////////////
+// export default function App() {
+//   return (
+//     <div className="marks">
+//       <CalculateMarks />
+//     </div>
+//   );
+// }
+// function CalculateMarks() {
+//   const [name, setName] = useState("");
+//   const [english, setEnglish] = useState(0);
+//   const [math, setMath] = useState(0);
+//   const [science, setScience] = useState(0);
+//   const totalMarks = english + math + science;
+//   const allSubjectsFilled = english > 0 && math > 0 && science > 0;
+//   const percentage = allSubjectsFilled
+//     ? Number(((totalMarks / 300) * 100).toFixed(2))
+//     : 0;
+//   const status = percentage > 40 ? "passed" : "fail";
+//   function handleReset() {
+//     setName("");
+//     setEnglish(0);
+//     setMath(0);
+//     setScience(0);
+//   }
+//   return (
+//     <div>
+//       <StudentName name={name} onSetName={setName} />
+//       <Marks
+//         science={science}
+//         onsetScience={setScience}
+//         math={math}
+//         onsetMath={setMath}
+//         english={english}
+//         onsetEnglish={setEnglish}
+//         totalMarks={totalMarks}
+//         percentage={percentage}
+//       />
+
+//       {allSubjectsFilled && (
+//         <Output
+//           name={name}
+//           totalMarks={totalMarks}
+//           percentage={percentage}
+//           status={status}
+//         />
+//       )}
+//       <Reset onReset={handleReset} />
+//     </div>
+//   );
+// }
+// function StudentName({ name, onSetName }) {
+//   return (
+//     <div>
+//       <label>Student Name:</label>
+//       <input
+//         type="text"
+//         placeholder="enter your name"
+//         value={name}
+//         onChange={(e) => onSetName(e.target.value)}
+//       />
+//     </div>
+//   );
+// }
+// function Marks({
+//   english,
+//   math,
+//   science,
+//   onsetEnglish,
+//   onsetMath,
+//   onsetScience,
+//   totalMarks,
+//   percentage,
+// }) {
+//   return (
+//     <div>
+//       <label>English(out of 100):</label>
+//       <input
+//         type="text"
+//         value={english}
+//         onChange={(e) => onsetEnglish(Number(e.target.value))}
+//       />
+//       <label>Math(out of 100):</label>
+//       <input
+//         type="text"
+//         value={math}
+//         onChange={(e) => onsetMath(Number(e.target.value))}
+//       />
+//       <label>Science(out of 100):</label>
+//       <input
+//         type="text"
+//         value={science}
+//         onChange={(e) => onsetScience(Number(e.target.value))}
+//       />
+//       <label>Total Marks(out of 300):</label>
+//       <input type="text" value={totalMarks} />
+//       <label>Percentage %:</label>
+//       <input type="text" value={percentage} />
+//     </div>
+//   );
+// }
+// function Output({ name, totalMarks, percentage, status }) {
+//   return (
+//     percentage && (
+//       <div>
+//         <span>
+//           {name} your Total marks is {totalMarks} and your percentage is{" "}
+//           {percentage}%
+//         </span>
+//         <span>Result :{status}</span>
+//       </div>
+//     )
+//   );
+// }
+// function Reset({ onReset }) {
+//   return <button onClick={onReset}>Reset</button>;
+// }

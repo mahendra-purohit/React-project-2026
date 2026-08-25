@@ -17,3 +17,42 @@ code {
   font-family:
     source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+/* 1. Main outer wrapper layout */
+.marks {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers everything horizontally */
+  justify-content: center;
+  width: 300px;
+  margin: 0 auto; /* Centers the whole card on the page */
+  padding: 20px;
+  background-color: aquamarine;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* 2. Standardizes all nested divs to center and gap their contents */
+.marks div {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the text labels, inputs, and components */
+  width: 100%;
+  gap: 12px; /* Uniform vertical gap between every single item */
+}
+
+/* 3. Style the inputs for a cleaner presentation */
+.marks input {
+  width: 80%; /* Keeps inputs neatly bounded and centered */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center; /* Centers the text inside the input boxes */
+  box-sizing: border-box;
+}
+
+/* 4. Bold your text labels for better readability */
+.marks label {
+  font-weight: bold;
+  margin-top: 5px;
+}
