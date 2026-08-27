@@ -88,20 +88,20 @@ function Reset({ onReset }) {
 // }
 // function CalculateMarks() {
 //   const [name, setName] = useState("");
-//   const [english, setEnglish] = useState(0);
-//   const [math, setMath] = useState(0);
-//   const [science, setScience] = useState(0);
+//   const [english, setEnglish] = useState("");
+//   const [math, setMath] = useState("");
+//   const [science, setScience] = useState("");
 //   const totalMarks = english + math + science;
-//   const allSubjectsFilled = english > 0 && math > 0 && science > 0;
+//   const allSubjectsFilled = english !== "" && math !== "" && science !== "";
 //   const percentage = allSubjectsFilled
 //     ? Number(((totalMarks / 300) * 100).toFixed(2))
 //     : 0;
-//   const status = percentage > 40 ? "passed" : "fail";
+//   const status = percentage > 40 ? "Pass" : "Fail";
 //   function handleReset() {
 //     setName("");
-//     setEnglish(0);
-//     setMath(0);
-//     setScience(0);
+//     setEnglish("");
+//     setMath("");
+//     setScience("");
 //   }
 //   return (
 //     <div>
@@ -115,6 +115,7 @@ function Reset({ onReset }) {
 //         onsetEnglish={setEnglish}
 //         totalMarks={totalMarks}
 //         percentage={percentage}
+//         allSubjectsFilled={allSubjectsFilled}
 //       />
 
 //       {allSubjectsFilled && (
@@ -151,6 +152,7 @@ function Reset({ onReset }) {
 //   onsetScience,
 //   totalMarks,
 //   percentage,
+//   allSubjectsFilled,
 // }) {
 //   return (
 //     <div>
@@ -173,23 +175,21 @@ function Reset({ onReset }) {
 //         onChange={(e) => onsetScience(Number(e.target.value))}
 //       />
 //       <label>Total Marks(out of 300):</label>
-//       <input type="text" value={totalMarks} />
+//       <input type="text" value={allSubjectsFilled ? totalMarks : ""} readOnly />
 //       <label>Percentage %:</label>
-//       <input type="text" value={percentage} />
+//       <input type="text" value={percentage} readOnly />
 //     </div>
 //   );
 // }
 // function Output({ name, totalMarks, percentage, status }) {
 //   return (
-//     percentage && (
-//       <div>
-//         <span>
-//           {name} your Total marks is {totalMarks} and your percentage is{" "}
-//           {percentage}%
-//         </span>
-//         <span>Result :{status}</span>
-//       </div>
-//     )
+//     <div>
+//       <span>
+//         {name} your Total marks is {totalMarks} and your percentage is{" "}
+//         {percentage}%
+//       </span>
+//       <span>Result :{status}</span>
+//     </div>
 //   );
 // }
 // function Reset({ onReset }) {

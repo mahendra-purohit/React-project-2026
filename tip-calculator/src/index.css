@@ -24,7 +24,7 @@ code {
   flex-direction: column;
   align-items: center; /* Centers everything horizontally */
   justify-content: center;
-  width: 300px;
+  width: 100%;
   margin: 0 auto; /* Centers the whole card on the page */
   padding: 20px;
   background-color: aquamarine;
@@ -35,15 +35,17 @@ code {
 /* 2. Standardizes all nested divs to center and gap their contents */
 .marks div {
   display: flex;
-  flex-direction: column;
-  align-items: center; /* Centers the text labels, inputs, and components */
+  flex-direction: column; /* Changed from column to row to align items on the same line */
+  align-items: center; /* Centers the text labels and inputs vertically with each other */
+  justify-content: space-between; /* Pushes labels to the left and inputs to the right */
   width: 100%;
-  gap: 12px; /* Uniform vertical gap between every single item */
+  gap: 15px; /* Creates space between the label text and its input box */
+  margin-bottom: 5px; /* Adds space between each row block */
 }
 
 /* 3. Style the inputs for a cleaner presentation */
 .marks input {
-  width: 80%; /* Keeps inputs neatly bounded and centered */
+  width: 180px; /* Changed to a fixed width so all inputs line up perfectly on the right edge */
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -54,5 +56,5 @@ code {
 /* 4. Bold your text labels for better readability */
 .marks label {
   font-weight: bold;
-  margin-top: 5px;
+  text-align: left; /* Aligns all label text cleanly to the left */
 }
