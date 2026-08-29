@@ -25,6 +25,7 @@ root.render(
       maxRating={5}
       messages={["Terrible", "bad", "okay", "good", "amazing"]}
       defaultRating={3}
+      size={48}
     />
     <Test />
   </React.StrictMode>,

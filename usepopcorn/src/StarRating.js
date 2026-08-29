@@ -12,7 +12,7 @@ const starContainer = {
 export default function StarRating({
   maxRating = 5,
   color = "#fcc419",
-  size = 48,
+  size,
   messages = [],
   defaultRating,
   onsetmovieRating,

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./index.css";
 export default function App() {
   return (
@@ -12,8 +13,8 @@ export default function App() {
 
       <TextExpander
         collapsedNumWords={20}
-        expandButtonText="Show text"
-        collapseButtonText="Collapse text"
+        expandButtonText="Show Text"
+        collapseButtonText="Less text"
         buttonColor="#ff6622"
       >
         Space travel requires some seriously amazing technology and
@@ -33,6 +34,32 @@ export default function App() {
   );
 }
 
-function TextExpander() {
-  return <div>TODO</div>;
+function TextExpander({
+  children,
+  collapsedNumWords = 10,
+  expandButtonText = "show more",
+  collapseButtonText = "show less",
+  buttonColor = "#1f09cd",
+  expanded = false,
+  className,
+}) {
+  const [isExpanded, setisExpanded] = useState(expanded);
+  const displayText = isExpanded
+    ? children
+    : children.split(" ").slice(0, collapsedNumWords).join(" ") + "...";
+  const buttonStyle = {
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    color: buttonColor,
+    font: "inherit",
+  };
+  return (
+    <div className={className} style={{ marginTop: "20px" }}>
+      <span>{displayText}</span>
+      <button style={buttonStyle} onClick={() => setisExpanded((exp) => !exp)}>
+        {isExpanded ? collapseButtonText : expandButtonText}
+      </button>
+    </div>
+  );
 }
