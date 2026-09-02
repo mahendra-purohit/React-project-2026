@@ -54,7 +54,7 @@ const average = (arr) =>
   arr.length === 0 ? 0 : arr.reduce((acc, cur) => acc + cur, 0) / arr.length;
 const key = "9f8fe70";
 export default function App() {
-  const [query, setQuery] = useState("inception");
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setisLoading] = useState(false);
@@ -62,6 +62,8 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null);
 
   function handleSelectMovie(id) {
+    //setSelectedId(id);
+
     setSelectedId((selectedId) => (id === selectedId ? null : id));
   }
   function handleCloseMovie() {
@@ -87,6 +89,7 @@ export default function App() {
           if (!response.ok) throw new Error("");
           const data = await response.json();
           if (data.Response === "False") throw new Error("Movie Not Found");
+
           setMovies(data.Search);
         } catch (err) {
           if (err.name !== "AbortError") setError(err.message);
@@ -99,6 +102,7 @@ export default function App() {
         setError("");
         return;
       }
+      handleCloseMovie();
       fetchMovies();
 
       //cleanup function only send request the whole string
@@ -255,6 +259,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
       runtime: Number(runtime.split(" ").at(0)),
       userRating,
     };
+    //console.log(newWatchedMovie);
     onAddWatched(newWatchedMovie);
     onCloseMovie();
   }
@@ -285,6 +290,23 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
       };
     },
     [title],
+  );
+  //close the current open movie when we click escape key
+  useEffect(
+    function () {
+      function callback(e) {
+        if (e.code === "Escape") {
+          onCloseMovie();
+        }
+      }
+      document.addEventListener("keydown", callback);
+      ///remove this event after movie closed
+      return function () {
+        document.removeEventListener("keydown", callback);
+      };
+    },
+
+    [onCloseMovie],
   );
 
   return (
