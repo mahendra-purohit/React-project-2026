@@ -1,70 +1,21 @@
 import "./index.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
-
-// const tempMovieData = [
-//   {
-//     imdbID: "tt1375666",
-//     Title: "Inception",
-//     Year: "2010",
-//     Poster:
-//       "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-//   },
-//   {
-//     imdbID: "tt0133093",
-//     Title: "The Matrix",
-//     Year: "1999",
-//     Poster:
-//       "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
-//   },
-//   {
-//     imdbID: "tt6751668",
-//     Title: "Parasite",
-//     Year: "2019",
-//     Poster:
-//       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
-//   },
-// ];
-
-// const tempWatchedData = [
-//   {
-//     imdbID: "tt1375666",
-//     Title: "Inception",
-//     Year: "2010",
-//     Poster:
-//       "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-//     runtime: 148,
-//     imdbRating: 8.8,
-//     userRating: 10,
-//   },
-//   {
-//     imdbID: "tt0088763",
-//     Title: "Back to the Future",
-//     Year: "1985",
-//     Poster:
-//       "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
-//     runtime: 116,
-//     imdbRating: 8.5,
-//     userRating: 9,
-//   },
-// ];
+import { useMovies } from "./useMovies";
+import { useLocalStorageState } from "./useLocalStorageState";
+import { useKey } from "./useKey";
 
 const average = (arr) =>
   arr.length === 0 ? 0 : arr.reduce((acc, cur) => acc + cur, 0) / arr.length;
 const key = "9f8fe70";
 export default function App() {
   const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
-  //const [watched, setWatched] = useState([]);
-
-  const [isLoading, setisLoading] = useState(false);
-  const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  const [watched, setWatched] = useState(function () {
-    const storedvalue = localStorage.getItem("watched");
-    return JSON.parse(storedvalue);
-  });
+
+  //////////////calling our custom hook here
+  const { movies, isLoading, error } = useMovies(query);
+  const [watched, setWatched] = useLocalStorageState([], "watched");
   function handleSelectMovie(id) {
     //setSelectedId(id);
 
@@ -79,50 +30,7 @@ export default function App() {
   function handleDeleteWatched(id) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
-  //save wateched movie in local storage
-  useEffect(
-    function () {
-      localStorage.setItem("watched", JSON.stringify(watched));
-    },
-    [watched],
-  );
-  useEffect(
-    function () {
-      const controller = new AbortController();
-      async function fetchMovies() {
-        try {
-          setisLoading(true);
-          setError("");
-          const response = await fetch(
-            `https://www.omdbapi.com/?apikey=${key}&s=${query}`,
-            { signal: controller.signal },
-          );
-          if (!response.ok) throw new Error("");
-          const data = await response.json();
-          if (data.Response === "False") throw new Error("Movie Not Found");
 
-          setMovies(data.Search);
-        } catch (err) {
-          if (err.name !== "AbortError") setError(err.message);
-        } finally {
-          setisLoading(false);
-        }
-      }
-      if (!query.length) {
-        setMovies([]);
-        setError("");
-        return;
-      }
-      handleCloseMovie();
-      fetchMovies();
-
-      //cleanup function only send request the whole string
-      return function () {
-        controller.abort();
-      };
-    },
-    [query],
-  );
   return (
     <>
       <Navbar>
@@ -172,6 +80,23 @@ function Logo() {
   );
 }
 function Search({ query, setQuery }) {
+  //using useRef to select dom element
+  const inputEl = useRef(null);
+  useEffect(
+    function () {
+      function callback(e) {
+        if (document.activeElement === inputEl.current) return;
+        if (e.code === "Enter") {
+          inputEl.current.focus();
+          setQuery("");
+        }
+      }
+
+      document.addEventListener("keydown", callback);
+      return () => document.addEventListener("keydown", callback);
+    },
+    [setQuery],
+  );
   return (
     <input
       className="search"
@@ -179,6 +104,7 @@ function Search({ query, setQuery }) {
       placeholder="Search movies..."
       value={query}
       onChange={(e) => setQuery(e.target.value)}
+      ref={inputEl}
     />
   );
 }
@@ -244,7 +170,6 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const [isLoading, setisLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
-  console.log(isWatched);
   const watchedUserRating = watched.find(
     (movie) => movie.imdbID === selectedId,
   )?.userRating;
@@ -270,11 +195,21 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(" ").at(0)),
       userRating,
+      countRatingDecision: countRef.current,
     };
     //console.log(newWatchedMovie);
     onAddWatched(newWatchedMovie);
     onCloseMovie();
   }
+
+  //check how many times user click on rating using useRef
+  const countRef = useRef(0);
+  useEffect(
+    function () {
+      if (userRating) countRef.current++;
+    },
+    [userRating],
+  );
 
   useEffect(
     function () {
@@ -304,22 +239,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     [title],
   );
   //close the current open movie when we click escape key
-  useEffect(
-    function () {
-      function callback(e) {
-        if (e.code === "Escape") {
-          onCloseMovie();
-        }
-      }
-      document.addEventListener("keydown", callback);
-      ///remove this event after movie closed
-      return function () {
-        document.removeEventListener("keydown", callback);
-      };
-    },
-
-    [onCloseMovie],
-  );
+  useKey("escape", onCloseMovie);
 
   return (
     <div className="details-container">

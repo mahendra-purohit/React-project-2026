@@ -38,7 +38,7 @@ export default function App() {
         <option value="INR">INR</option>
       </select>
       <p>
-        {converted} {toCur}
+        {Number(converted).toFixed(2)} {toCur}
       </p>
     </div>
   );
