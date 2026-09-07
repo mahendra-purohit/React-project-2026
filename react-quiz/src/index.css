@@ -28,6 +28,9 @@ body {
   color: var(--color-light);
   background-color: var(--color-darkest);
   padding: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .app {
@@ -70,6 +73,10 @@ h1 {
 h2 {
   font-size: 3.6rem;
   margin-bottom: 2rem;
+}
+.foot {
+  display: flex;
+  justify-content: space-between;
 }
 
 h3 {
@@ -142,7 +149,8 @@ progress {
 }
 
 .btn-ui {
-  float: right;
+  display: flex;
+  align-items: end;
 }
 
 .options {
