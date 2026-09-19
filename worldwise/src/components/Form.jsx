@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Button from "./Button";
+import "react-datepicker/dist/react-datepicker.css";
 
 import styles from "./Form.module.css";
 import Buttonback from "./Buttonback";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Message from "./Message";
+import DatePicker from "react-datepicker";
+import { useCities } from "../contexts/CitiesContext";
 
 function Form() {
   const [cityName, setCityName] = useState("");
@@ -21,9 +24,11 @@ function Form() {
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
   const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
-
+  const { createCity } = useCities();
+  const navigate = useNavigate();
   useEffect(
     function () {
+      if (!lat && !lng) return;
       async function fetchCityData() {
         try {
           setisLoadingGeoCoding(true);
@@ -46,9 +51,23 @@ function Form() {
     },
     [lat, lng],
   );
+  function handleSubmit(e) {
+    e.preventDefault();
+    const newCity = {
+      cityName,
+      country,
+      emoji,
+      date,
+      notes,
+      position: { lat, lng },
+    };
+    createCity(newCity);
+    navigate("/app/cities");
+  }
+  if (!lat && !lng) return <Message message="start clicking map " />;
   if (geocodingError) return <Message message={geocodingError} />;
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
@@ -61,10 +80,16 @@ function Form() {
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
-        <input
+        {/* <input
           id="date"
           onChange={(e) => setDate(e.target.value)}
           value={date}
+        /> */}
+        <DatePicker
+          id="date"
+          onChange={(date) => setDate(date)}
+          dateFormat="dd/MM/yyyy"
+          selected={date}
         />
       </div>
 
