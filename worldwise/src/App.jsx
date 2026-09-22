@@ -1,14 +1,14 @@
-import "flag-icons/css/flag-icons.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "flag-icons/css/flag-icons.min.css";
+import "./index.css";
 import Homepage from "./pages/Homepage";
 import Product from "./pages/Product";
 import Pricing from "./pages/Pricing";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
+import Login from "./pages/Login";
 import CityList from "./components/CityList";
 import CountryList from "./components/CountryList";
-import "./index.css";
-import Login from "./pages/Login";
 import City from "./components/City";
 import Form from "./components/Form";
 import { CitiesProvider } from "./contexts/CitiesContext";
