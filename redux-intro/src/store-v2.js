@@ -9,6 +9,7 @@ const rootReducer = combineReducers({
   customerDetails: CustomerReducer,
 });
 
+/////classic redux
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk)),

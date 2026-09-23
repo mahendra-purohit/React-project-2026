@@ -91,7 +91,7 @@ function payLoan() {
 }
 store.dispatch(payLoan());
 console.log(store.getState());
-
+/////create action
 function CreateCustomer(fullName, nationalId) {
   return {
     type: "customer/create",
