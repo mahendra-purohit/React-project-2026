@@ -6,6 +6,7 @@ function Button({ children, disabled, to, type, onClick }) {
   const styles = {
     primary: base + ` px-4 py-3 md:px-6 md:py-4`,
     small: base + ` py-2 px-4 md:px-5 md:py-2.5`,
+    round: base + ` py-1 px-2.5 md:px-3.5 md:py-2 text-sm`,
   };
   if (to)
     return (
